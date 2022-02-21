@@ -1,0 +1,10 @@
+# train and val datasets (image directory or *.txt file with image paths)
+path: /home/jose/workspace/yolov5
+train: /home/jose/workspace/yolov5/4grass-v5/sim4000
+val: /home/jose/workspace/yolov5/4grass-v5/nibio
+test: /home/jose/workspace/yolov5/4grass-v5/house1
+
+# number of classes
+nc: 4
+# class names
+names: ['Lethal', 'Danger', 'Warning', 'Safe']

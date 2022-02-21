@@ -121,6 +121,9 @@ def run(data,
         callbacks=Callbacks(),
         compute_loss=None,
         ):
+
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
     # Initialize/load model and set device
     training = model is not None
     if training:  # called by train.py

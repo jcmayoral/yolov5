@@ -1,0 +1,10 @@
+# train and val datasets (image directory or *.txt file with image paths)
+path: /home/jose/workspace/PyTorch_YOLOv4/
+train: /home/jose/workspace/PyTorch_YOLOv4/4grass-v4-mx/real-real/real-noh1sept-6518.filter
+val: /home/jose/workspace/PyTorch_YOLOv4/4grass-v4-mx/real-real/house1-1360.filter
+test: /home/jose/workspace/PyTorch_YOLOv4/4grass-v4-mx/real-real/house1-1360.filter
+
+# number of classes
+nc: 4
+# class names
+names: ['Lethal', 'Danger', 'Warning', 'Safe']

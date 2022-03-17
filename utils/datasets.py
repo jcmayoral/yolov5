@@ -613,14 +613,15 @@ class LoadImagesAndLabels(Dataset):
             # labels = cutout(img, labels, p=0.5)
             # nl = len(labels)  # update after cutout
 
+        if self.trinary:
+            for i in range(nl):
+                labels[i,0] = 2 if labels[i,0] > 2 else labels[i,0]
+
         labels_out = torch.zeros((nl, 6))
         if nl:
             labels_out[:, 1:] = torch.from_numpy(labels)
 
 
-        if self.trinary:
-            for i in range(nl):
-                labels[i,0] = 2 if labels[i,0] > 2 else labels[i,0]
 
         # Convert
         img = img.transpose((2, 0, 1))[::-1]  # HWC to CHW, BGR to RGB

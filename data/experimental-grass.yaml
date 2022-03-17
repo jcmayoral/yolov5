@@ -1,8 +1,8 @@
 # train and val datasets (image directory or *.txt file with image paths)
-path: /home/jose/workspace/yolov5
-train: /home/jose/workspace/yolov5/4grass-v5/house1
-val: /home/jose/workspace/yolov5/4grass-v5/nibio
-test: /home/jose/workspace/yolov5/4grass-v5/house3
+path: /home/jose/workspace/PyTorch_YOLOv4/
+train: /home/jose/workspace/PyTorch_YOLOv4/4grass-v4-mx/experimental/train.filter
+val: /home/jose/workspace/PyTorch_YOLOv4/4grass-v4-mx/experimental/valid.filter
+test: /home/jose/workspace/PyTorch_YOLOv4/4grass-v4-mx/experimental/valid.filter
 
 # number of classes
 nc: 4

@@ -768,6 +768,15 @@ def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, classes=Non
 
     return output
 
+def post_non_max_suppression(predictions, iou_thres=0.45):
+    nms = torchvision.ops.nms(predictions[0][:,:4], predictions[0][:,4], iou_thres)  # NMS
+    output = [torch.zeros((0, 6), device=predictions[0].device)] * nms.shape[0]
+
+    for i,j in enumerate(nms):
+        output[i] = predictions[0][j]
+    return output
+
+
 
 def strip_optimizer(f='best.pt', s=''):  # from utils.general import *; strip_optimizer()
     # Strip optimizer from 'f' to finalize training, optionally save as 's'

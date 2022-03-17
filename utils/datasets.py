@@ -614,6 +614,13 @@ class LoadImagesAndLabels(Dataset):
         if nl:
             labels_out[:, 1:] = torch.from_numpy(labels)
 
+
+        print("AAA", labels)
+        for i in range(nl):
+            print (labels[i], labels[i,0])
+            labels[i,0] = 2 if labels[i,0] > 2 else labels[i,0]
+            print (labels[i], labels[i,0])
+
         # Convert
         img = img.transpose((2, 0, 1))[::-1]  # HWC to CHW, BGR to RGB
         img = np.ascontiguousarray(img)

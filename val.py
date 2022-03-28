@@ -272,12 +272,19 @@ def run(data,
 
     # Print results
     pf = '%20s' + '%11i' * 2 + '%11.3g' * 4  # print format
+    file = open("results.txt", "a+")
+    file.write("\n Confidence threshold {} IOU threshold {} \n".format(conf_thres, iou_thres))
+    file.write(pf % ('all', seen, nt.sum(), mp, mr, map50, map)+"\n")
     LOGGER.info(pf % ('all', seen, nt.sum(), mp, mr, map50, map))
 
     # Print results per class
     if (verbose or (nc < 50 and not training)) and nc > 1 and len(stats):
+
         for i, c in enumerate(ap_class):
+            file.write(pf % (names[c], seen, nt[c], p[i], r[i], ap50[i], ap[i]) +"\n")
             LOGGER.info(pf % (names[c], seen, nt[c], p[i], r[i], ap50[i], ap[i]))
+
+    file.close()
 
     # Print speeds
     t = tuple(x / seen * 1E3 for x in dt)  # speeds per image

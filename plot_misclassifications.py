@@ -15,7 +15,8 @@ def process(opt, normalize=1):
         #container = DataContainer()
         #one for stats
         #fig, axs = plt.subplots(5,5)
-        fig, axs = plt.subplots(4)
+        fig, axs = plt.subplots(4, sharex=True)
+        plt.subplots_adjust(hspace=0.50)
 
         fig.suptitle("Confusion Matrix with Confidence Threshold set to  {}".format(s))
 
@@ -65,7 +66,7 @@ def process(opt, normalize=1):
         #FN
         for j in range(4):
             axs[2].plot(samples,  non_data[:,-1,j], label="FN {}".format(j))
-            axs[2].set_title("Number of images of False Negatives")
+            axs[2].set_title("Number of False Negatives Detections")
 
         #LETHAL MISCLASSIFICATIONS
         lmisclass = non_data[:,0,1] + non_data[:,0,2] + non_data[:,0,3] + non_data[:,1,0] + non_data[:,2,0] + non_data[:,3,0]
@@ -100,10 +101,16 @@ def process(opt, normalize=1):
 
         axs[3].plot(samples, all_misclass/n_images , label="ALL")
 
+        ticks = np.arange(0, 1.1, 0.1)
 
         for i in range(4):
             axs[i].legend()
             axs[i].grid()
+            axs[i].set_xticks(ticks)
+            if i == 2:
+                continue
+            axs[i].set_yticks(ticks)
+
         axs[3].set_xlabel('IoU threshold')
 
 

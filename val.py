@@ -297,6 +297,8 @@ def run(data,
     # Plots
     if plots:
         confusion_matrix.plot(save_dir=save_dir, names=list(names.values()))
+        #file
+        np.savetxt(Path(project)/"cm_{}_{}.txt".format(conf_thres, iou_thres), confusion_matrix.matrix)
         callbacks.run('on_val_end')
 
     # Save JSON

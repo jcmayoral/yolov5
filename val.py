@@ -272,8 +272,10 @@ def run(data,
 
     # Print results
     pf = '%20s' + '%11i' * 2 + '%11.3g' * 4  # print format
-    file = open("results.txt", "a+")
-    file.write("\n Confidence threshold {} IOU threshold {} \n".format(conf_thres, iou_thres))
+
+    file = open(Path(project)/"results_{}_{}.txt".format(conf_thres, iou_thres), "a+")
+    #file.write("\n Confidence threshold {} IOU threshold {} \n".format(conf_thres, iou_thres))
+    file.write(s+"\n")
     file.write(pf % ('all', seen, nt.sum(), mp, mr, map50, map)+"\n")
     LOGGER.info(pf % ('all', seen, nt.sum(), mp, mr, map50, map))
 

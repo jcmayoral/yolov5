@@ -72,13 +72,17 @@ def process(opt):
             for i,st in enumerate(stats):
                 r = i//2
                 c = i%2
-                axs[c,r].plot(samples, container.get(cl, st), label="Class {} Statics {}".format(cl,st))
+                axs[c,r].plot(samples, container.get(cl, st), label="{}->{}".format(cl,st))
 
         for i in range(4):
             r = i//2
             c = i%2
+            print (c,r)
             axs[c,r].set_title(stats[i])
-            axs[c,r].legend()
+            #axs[c,r].legend()
+            box = axs[c,r].get_position()
+            axs[c,r].set_position([box.x0, box.y0, box.width * 0.8, box.height])
+            axs[c,r].legend(loc='best',prop={'size': 5})
             axs[c,r].grid()
             axs[c,r].set_xlabel('IoU threshold')
 
@@ -88,7 +92,10 @@ def process(opt):
 
         #plt.title("conf {} vs iou".format(s))
         plt.legend()
-        plt.show()
+        image_filename = os.path.join(opt.folder,"stats_"+str(s)+"*.jpg")
+        #plt.show()
+        plt.savefig(image_filename, dpi=1500)
+        #plt.show()
 
 def parse_opt():
     #parser.add_argument('--batch-size', type=int, default=32, help='batch size')

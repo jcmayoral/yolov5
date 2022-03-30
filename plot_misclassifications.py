@@ -55,7 +55,7 @@ def process(opt, normalize=1):
 
         #Precision
         for j in range(4):
-            axs[0].plot(samples,  data[:,j,j], label="Precision Class {}".format(j))
+            axs[0].plot(samples,  data[:,j,j], label="Precision {}".format(j))
             axs[0].set_title("Normalize Precision")
 
         #FP
@@ -102,14 +102,18 @@ def process(opt, normalize=1):
         axs[3].plot(samples, all_misclass/n_images , label="ALL")
 
         ticks = np.arange(0, 1.1, 0.1)
+        y_ticks = np.arange(0, 1.1, 0.2)
+
 
         for i in range(4):
-            axs[i].legend()
+            box = axs[i].get_position()
+            axs[i].set_position([box.x0, box.y0, box.width * 0.8, box.height])
+            axs[i].legend(loc='center left', bbox_to_anchor=(1, 0.5))
             axs[i].grid()
             axs[i].set_xticks(ticks)
             if i == 2:
                 continue
-            axs[i].set_yticks(ticks)
+            axs[i].set_yticks(y_ticks)
 
         axs[3].set_xlabel('IoU threshold')
 
@@ -123,7 +127,9 @@ def process(opt, normalize=1):
         #    axs[c,r].set_xlabel('IoU threshold')
 
         plt.legend()
-        plt.show()
+        image_filename = os.path.join(opt.folder,"results_"+str(s)+"*.jpg")
+        #plt.show()
+        plt.savefig(image_filename, dpi=500)
 
 def parse_opt():
     #parser.add_argument('--batch-size', type=int, default=32, help='batch size')

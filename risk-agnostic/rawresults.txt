@@ -1,0 +1,12 @@
+MAX ACC: Confidence 0.0 IOU 0.9
+MAX ACC: Confidence 0.1 IOU 0.9
+MAX ACC: Confidence 0.2 IOU 0.9
+MAX ACC: Confidence 0.0 IOU 0.9 
+MAX ACC: Confidence 0.1 IOU 0.9 
+MAX ACC: Confidence 0.2 IOU 0.9 
+MAX ACC: Confidence 0.0 IOU 0.9 
+MAX ACC: Confidence 0.1 IOU 0.9 
+MAX ACC: Confidence 0.2 IOU 0.9 
+MAX ACC: Confidence 0.0 IOU 0.9 
+MAX ACC: Confidence 0.1 IOU 0.9 
+MAX ACC: Confidence 0.2 IOU 0.9 

@@ -5,17 +5,33 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+def get_cmap(n, name='hsv'):
+    '''Returns a function that maps each index in 0, 1, ..., n-1 to a distinct
+    RGB color; the keyword argument name must be a standard mpl colormap name.'''
+    return plt.cm.get_cmap(name, n)
 
-def my_plot(samples,data, image_filename):
+def my_plot(samples,data, image_filename, ylabel):
     plt.figure()
     for i in range(data.shape[0]):
-        plt.scatter(samples, data[i,:], label='iou_{0:.2}'.format(i*0.1))
+        plt.scatter(samples, data[i,:], label='coeff_{0:.2}'.format(i*0.1))
 
-    plt.xlabel('Confidence threshold')
-    plt.ylabel('Accuracy')
+    plt.xlabel('IOU threshold')
+    plt.ylabel(ylabel)
     plt.legend()
     plt.savefig(image_filename, dpi=1500)
 
+def my_plot2(x,data, image_filename, xlabel, ylabel):
+    plt.figure()
+    color = get_cmap(11)
+
+    for i in range(data.shape[0]):
+        plt.figure()
+        plt.scatter(x[i,:], data[i,:], label='coeff_{0:.2}'.format(i*0.1), c=color(i), s=10+20*np.arange(data[i,:].shape[0]), alpha=1.0)
+        #plt.scatter(x[i,:], data[i,:], s=50*np.arange(data[i,:].shape[0]), marker="x", facecolor=color(i))
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.legend()
+        plt.savefig(image_filename.replace(".jpg", str(i)+".jpg"), dpi=1500)
 
 def process(opt):
     samples = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
@@ -23,6 +39,7 @@ def process(opt):
     acc_results = np.zeros((11,11))
     exp_results = np.zeros((11,11))
     miss_results = np.zeros((11,11))
+    coeff_results = np.zeros((11,11))
 
     #linspace for confidence threshold
     for ind,s in enumerate(samples):
@@ -61,14 +78,27 @@ def process(opt):
             acc_results[indx, indy] = ACC
             exp_results[indx, indy] = ACC2
             miss_results[indx, indy] = MISCLASS_RATE
+            coeff_results[indx, indy] = ACC/MISCLASS_RATE
+
     print(acc_results)
     print (exp_results)
     print(miss_results)
 
 
-    my_plot(samples, acc_results, os.path.join(opt.folder,"{}.jpg".format("test_acc")))
-    my_plot(samples, exp_results, os.path.join(opt.folder,"{}.jpg".format("test_exp")))
-    my_plot(samples, miss_results, os.path.join(opt.folder,"{}.jpg".format("test_miss")))
+    my_plot(samples, acc_results, os.path.join(opt.folder,"{}.jpg".format("test_acc")), "accuracy")
+    my_plot(samples, exp_results, os.path.join(opt.folder,"{}.jpg".format("test_exp")), "accuracy plus missclass")
+    my_plot(samples, miss_results, os.path.join(opt.folder,"{}.jpg".format("test_miss")), "misclassifications")
+    my_plot(samples, coeff_results, os.path.join(opt.folder,"{}.jpg".format("test_coeff")), "coefficient")
+    my_plot2(acc_results, miss_results, os.path.join(opt.folder,"{}.jpg".format("test_state")), "accuracy", "misclassifications")
+
+    results = np.argwhere(acc_results==acc_results.max())
+    print(acc_results)
+
+    with open(os.path.join(opt.folder,"rawresults.txt"), "a") as f:
+        for r in results:
+            print("MAX ACC: Confidence {} IOU {} ".format(0.1*r[0], 0.1*r[1]))
+            print(acc_results[r[0], r[1]])
+            f.write("MAX ACC: Confidence {} IOU {} \n".format(0.1*r[0], 0.1*r[1]))
 
     #plt.show()
 
